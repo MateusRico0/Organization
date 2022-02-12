@@ -8,7 +8,9 @@ struct items{
   char item[50];
   struct items *next;
 };
+
 #include "list.h"
+
 void Upper(struct items **str){
   for(int i = 0; i < 50; i++){
     if((*str)->item[i] > 96  && (*str)->item[i] < 123)
@@ -16,16 +18,27 @@ void Upper(struct items **str){
   }
 }
 
+int get_data(){
+  int cash;
+  int structs_Num;
+  FILE *arq = fopen("data.txt","r");
+  fscanf(arq,"%d\n",&cash);
+//  fscanf(arq,"%d\n",&structs_Num);
+
+
+  fclose(arq);
+
+  return cash;
+}
+
 int main(){
+  FILE *arq = fopen("data.txt","a");
+  fclose(arq);
+
   struct items *all = NULL;
   struct items *exist = NULL;
   struct items *voided = NULL;
 
-  new_item(&all,"Opaa...\n");
-  new_item(&all,"Alo\n");
-  new_item(&all,"Alguem?\n");
-  new_item(&all,"OI show\n");
-  show_items(all);
-  delete_item(&all,"Alguem?\n");
-  show_items(all);
+  int wallet = get_data();
+
 }
