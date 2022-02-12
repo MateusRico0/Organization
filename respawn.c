@@ -18,17 +18,48 @@ void Upper(struct items **str){
   }
 }
 
-int get_data(){
+/**
+* 1st line: Cash
+* 2nd line: N of all elements
+* Next lines: N elements
+* N+1: N of elements that the person have
+* ...
+*/
+int get_data(struct items **all, struct items **live, struct items **dead){
+
   int cash;
   int structs_Num;
+  char name[50];
+
   FILE *arq = fopen("data.txt","r");
   fscanf(arq,"%d\n",&cash);
-//  fscanf(arq,"%d\n",&structs_Num);
 
+  fscanf(arq,"%d\n",&structs_Num); // Number of structs that will be read
+  for(int i = 0; i < structs_Num; i++){
+    fscanf(arq,"%[^\n]\n",&name);
+    new_item(&(*all), name);
+  }
 
+  fscanf(arq,"%d\n",&structs_Num);
+  for(int i = 0; i < structs_Num; i++){
+    fscanf(arq,"%[^\n]\n",&name);
+    new_item(&(*live), name);
+  }
+
+  fscanf(arq,"%d\n",&structs_Num);
+  for(int i = 0; i < structs_Num; i++){
+    fscanf(arq,"%[^\n]\n",&name);
+    new_item(&(*dead), name);
+  }
   fclose(arq);
 
   return cash;
+}
+
+void update_data(int wallet){
+  FILE *arq = fopen("data.txt","w");
+  fprintf(arq,"%d\n",wallet);
+  fclose(arq);
 }
 
 int main(){
@@ -36,9 +67,8 @@ int main(){
   fclose(arq);
 
   struct items *all = NULL;
-  struct items *exist = NULL;
-  struct items *voided = NULL;
+  struct items *live = NULL;
+  struct items *dead = NULL;
 
-  int wallet = get_data();
-
+  int wallet = get_data(&all, &live, &dead);
 }
