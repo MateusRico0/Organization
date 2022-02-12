@@ -69,6 +69,6 @@ int main(){
   struct items *all = NULL;
   struct items *live = NULL;
   struct items *dead = NULL;
-
+  
   int wallet = get_data(&all, &live, &dead);
 }

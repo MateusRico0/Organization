@@ -40,6 +40,7 @@ struct items *search_node(struct items *node, char name[]){
       node = node->next;
     }
 }
+
 void delete_item(struct items **node, char name[]){
   struct items *result = search_node(*node, name);
   struct items *aux = *node;
@@ -56,4 +57,14 @@ void delete_item(struct items **node, char name[]){
       aux = aux->next;
     }
   }
+}
+
+int size_list(struct items *node){
+  int count = 0;
+  while(node != NULL){
+    count++;
+    node = node->next;
+  }
+
+  return count;
 }
