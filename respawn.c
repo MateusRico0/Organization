@@ -25,8 +25,7 @@ int main(){
   new_item(&all,"Alo\n");
   new_item(&all,"Alguem?\n");
   new_item(&all,"OI show\n");
-  //show_items(all);
+  show_items(all);
   delete_item(&all,"Alguem?\n");
-  printf("a\n");
   show_items(all);
 }

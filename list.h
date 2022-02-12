@@ -29,23 +29,31 @@ void show_items(struct items *node){
     printf("%s\n",node->item);
     node = node->next;
   }while(node!=NULL);
-  printf("b\n");
 }
-/* in process
+
+
+struct items *search_node(struct items *node, char name[]){
+    while(node!=NULL){
+      if(str_compare((node->item), name) == 1){
+        return node;
+      }
+      node = node->next;
+    }
+}
 void delete_item(struct items **node, char name[]){
+  struct items *result = search_node(*node, name);
   struct items *aux = *node;
 
-  if(str_compare(((*node)->item), name)==1){
-    *node = (*node)->next;
-    free(aux);
-  }
-
-  while((*node)->next != NULL){
-    if(str_compare(((*node)->next->item), name)==1){
-      aux = (*node)->next;
-      (*node)->next = (*node)->next->next;
-      free(aux);
+  if(*node == result){
+    *node = result->next;
+    free(result);
+  }else{
+    while((aux != result) && (aux != NULL)){
+      if(aux->next == result){
+        aux->next = result->next;
+        free(result);
+      }
+      aux = aux->next;
     }
   }
 }
-*/
