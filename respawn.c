@@ -85,6 +85,30 @@ void update_data(int wallet, struct items *all, struct items *alive, struct item
   fclose(arq);
 }
 
+int menu(int wallet, struct items *all, struct items *alive, struct items *dead){
+  int order;
+  printf("Your wallet: |%d|\n",wallet);
+  printf("----------------------\n\n");
+  printf("ALL YOUR LIST:\n");
+  show_items(all);
+
+  printf("\n\nITEMS YOU HAVE:\n");
+  show_items(alive);
+
+  printf("\n\nITEMS NEEDED:\n");
+  show_items(dead);
+
+  printf("\nOpitions:\n");
+  printf("0 - Left\n");
+  printf("1 - Add or remove money\n");
+  printf("2 - add a item in your list\n");
+  printf("3 - remove a item in your list\n: ");
+  scanf("%d",&order);
+
+
+  return order;
+}
+
 int main(){
   FILE *arq = fopen("data.txt","a");
   fclose(arq);
@@ -94,24 +118,17 @@ int main(){
   struct items *dead = NULL;
 
   int wallet = get_data(&all, &alive, &dead);
+
   int order;
   int stop = 1;
+
   while(stop){
-    printf("Your wallet: %d\n\n",wallet);
-    printf("ALL YOU ITENS:\n");
-    show_items(all);
-    printf("Opitions:\n");
-    printf("0 - Left\n");
-    printf("1 - Add or remove money\n");
-    printf("2 - add a item in your list\n");
-    printf("3 - remove a item in your list\n: ");
-    scanf("%d",&order);
+    order = menu(wallet, all, alive, dead);
     if(order == 1){
       printf("What is the value?\n");
       int val;
       scanf("%d",&val);
       wallet += val;
-      update_data(wallet,all,alive,dead);
     }else{
       if(order == 2){
         printf("What is the item?\n");
@@ -119,7 +136,6 @@ int main(){
         scanf("%s",&nam);
         new_item(&all,nam);
         new_item(&alive,nam);
-        update_data(wallet,all,alive,dead);
       } else{
           if(order == 3){
             printf("What is the item?\n");
@@ -127,10 +143,10 @@ int main(){
             scanf("%s",&nam);
             delete_item(&alive,nam);
             new_item(&dead, nam);
-            update_data(wallet,all,alive,dead);
           }else if(order == 0) stop = 0;
         }
       }
+    update_data(wallet,all,alive,dead);
     system("clear"); // linux
     // system("cls") // windows
   }

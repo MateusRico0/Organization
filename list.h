@@ -27,12 +27,13 @@ void new_item(struct items **node, char name[]){
 void show_items(struct items *node){
   if(node != NULL){
     do{
-      printf("%s\n",node->item);
+      printf(" - %s    ",node->item);
       node = node->next;
     }while(node!=NULL);
   }else{
     printf("Empty\n");
   }
+  printf("\n");
 }
 
 
