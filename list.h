@@ -25,10 +25,14 @@ void new_item(struct items **node, char name[]){
 }
 
 void show_items(struct items *node){
-  do{
-    printf("%s\n",node->item);
-    node = node->next;
-  }while(node!=NULL);
+  if(node != NULL){
+    do{
+      printf("%s\n",node->item);
+      node = node->next;
+    }while(node!=NULL);
+  }else{
+    printf("Empty\n");
+  }
 }
 
 

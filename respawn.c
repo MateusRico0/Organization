@@ -56,7 +56,7 @@ int get_data(struct items **all, struct items **alive, struct items **dead){
   return cash;
 }
 
-void update_data(int wallet, struct items *all, truct items *alive, truct items *dead){
+void update_data(int wallet, struct items *all, struct items *alive, struct items *dead){
   int size = size_list(all);
 
   FILE *arq = fopen("data.txt","w");
@@ -94,6 +94,46 @@ int main(){
   struct items *dead = NULL;
 
   int wallet = get_data(&all, &alive, &dead);
+  int order;
+  int stop = 1;
+  while(stop){
+    printf("Your wallet: %d\n\n",wallet);
+    printf("ALL YOU ITENS:\n");
+    show_items(all);
+    printf("Opitions:\n");
+    printf("0 - Left\n");
+    printf("1 - Add or remove money\n");
+    printf("2 - add a item in your list\n");
+    printf("3 - remove a item in your list\n: ");
+    scanf("%d",&order);
+    if(order == 1){
+      printf("What is the value?\n");
+      int val;
+      scanf("%d",&val);
+      wallet += val;
+      update_data(wallet,all,alive,dead);
+    }else{
+      if(order == 2){
+        printf("What is the item?\n");
+        char nam[50];
+        scanf("%s",&nam);
+        new_item(&all,nam);
+        new_item(&alive,nam);
+        update_data(wallet,all,alive,dead);
+      } else{
+          if(order == 3){
+            printf("What is the item?\n");
+            char nam[50];
+            scanf("%s",&nam);
+            delete_item(&alive,nam);
+            new_item(&dead, nam);
+            update_data(wallet,all,alive,dead);
+          }else if(order == 0) stop = 0;
+        }
+      }
+    system("clear"); // linux
+    // system("cls") // windows
+  }
 
-  
+  printf("THE END\n");
 }
