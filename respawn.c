@@ -25,7 +25,7 @@ void Upper(struct items **str){
 * N+1: N of elements that the person have
 * ...
 */
-int get_data(struct items **all, struct items **live, struct items **dead){
+int get_data(struct items **all, struct items **alive, struct items **dead){
 
   int cash;
   int structs_Num;
@@ -43,7 +43,7 @@ int get_data(struct items **all, struct items **live, struct items **dead){
   fscanf(arq,"%d\n",&structs_Num);
   for(int i = 0; i < structs_Num; i++){
     fscanf(arq,"%[^\n]\n",&name);
-    new_item(&(*live), name);
+    new_item(&(*alive), name);
   }
 
   fscanf(arq,"%d\n",&structs_Num);
@@ -56,9 +56,32 @@ int get_data(struct items **all, struct items **live, struct items **dead){
   return cash;
 }
 
-void update_data(int wallet){
+void update_data(int wallet, struct items *all, truct items *alive, truct items *dead){
+  int size = size_list(all);
+
   FILE *arq = fopen("data.txt","w");
   fprintf(arq,"%d\n",wallet);
+
+  fprintf(arq,"%d\n", size);
+  for(int i = 0; i < size; i++){
+    fprintf(arq,"%s\n",all->item);
+    all = all->next;
+  }
+
+  size = size_list(alive);
+  fprintf(arq,"%d\n", size);
+  for(int i = 0; i < size; i++){
+    fprintf(arq,"%s\n",alive->item);
+    alive = alive->next;
+  }
+
+  size = size_list(dead);
+  fprintf(arq,"%d\n", size);
+  for(int i = 0; i < size; i++){
+    fprintf(arq,"%s\n",dead->item);
+    dead = dead->next;
+  }
+
   fclose(arq);
 }
 
@@ -67,8 +90,10 @@ int main(){
   fclose(arq);
 
   struct items *all = NULL;
-  struct items *live = NULL;
+  struct items *alive = NULL;
   struct items *dead = NULL;
+
+  int wallet = get_data(&all, &alive, &dead);
+
   
-  int wallet = get_data(&all, &live, &dead);
 }
